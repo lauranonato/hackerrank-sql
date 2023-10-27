@@ -1,0 +1,12 @@
+select 
+    max(case when occupation = 'Doctor'    then name end) doctor,
+    max(case when occupation = 'Professor' then name end) professor,
+    max(case when occupation = 'Singer'    then name end) singer,
+    max(case when occupation = 'Actor'     then name end) actor
+from (
+    select name,
+        occupation,
+        row_number() over(partition by occupation order by name) rnk
+    from occupations o
+) o
+group by rnk
