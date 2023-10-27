@@ -1,0 +1,10 @@
+with metrics as (
+select 
+    round(min(lat_n),4) as pa,
+    round(min(long_w),4) as pb,
+    round(max(lat_n),4) as pc,
+    round(max(long_w),4) as pd
+from station
+)
+select cast((abs(pa-pc))+(abs(pb-pd)) as decimal (10,4)) from metrics
+    

@@ -1,0 +1,24 @@
+with bs as (
+select 
+    company_code,
+    count(distinct employee_code) total_employees,
+    count(distinct manager_code) as total_managers,
+    count(distinct senior_manager_code) as total_senior_manager,
+    count(distinct lead_manager_code) as total_lead_manager
+from employee
+group by 
+    company_code
+)
+select 
+    c.company_code,
+    c.founder,
+    ct.total_lead_manager,
+    ct.total_senior_manager,
+    ct.total_managers,
+    ct.total_employees
+--    rank () over (order by c.company_code) rnk_cc
+from company c 
+left join bs ct 
+    on ct.company_code = c.company_code   
+order by 
+    c.company_code

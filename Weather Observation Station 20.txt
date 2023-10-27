@@ -1,0 +1,4 @@
+select distinct 
+    cast(percentile_cont(0.5) within group (order by lat_n)
+    over () as decimal (18,4)) as median
+from station
